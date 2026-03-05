@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-void: #090301;
+  --color-ember-50: #FCE3A4;
+  --color-ember-100: #F7D28A;
+  --color-ember-200: #E9B863;
+  --color-ember-300: #D1A668;
+  --color-ember-400: #B8732B;
+  --color-ember-500: #93622B;
+  --color-ember-600: #723F12;
+  --color-ember-700: #522C0F;
+  --color-ember-hot: #FFB347;
+  --shadow-glow: 0 0 24px rgba(255,179,71,0.35), 0 0 60px rgba(209,166,104,0.22), 0 0 120px rgba(184,115,43,0.10);
+  --animate-floaty: floaty 3.8s ease-in-out infinite;
+  --animate-flicker: flicker 4.2s linear infinite;
+  --animate-grain-flicker: grain-flicker 0.15s steps(2) infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  8% { opacity: 0.82; }
+  9% { opacity: 1; }
+  10% { opacity: 0.65; }
+  11% { opacity: 1; }
+}
+
+@keyframes grain-flicker {
+  0%   { opacity: 0.13; }
+  50%  { opacity: 0.17; }
+  100% { opacity: 0.13; }
+}
+
+:root {
+  --void: #090301;
+  --gold: #FCE3A4;
+  --gold2: #D1A668;
+  --bronze: #522C0F;
+}
+
+html, body { height: 100%; background: var(--void); }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* dynamic grain — flickers between opacity levels */
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  animation: grain-flicker 0.15s steps(2) infinite;
+  z-index: 70;
+}
+
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(252,227,164,0.04),
+    rgba(252,227,164,0.04) 1px,
+    rgba(0,0,0,0) 3px,
+    rgba(0,0,0,0) 6px
+  );
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+  z-index: 70;
+}
+
+.vignette {
+  position: fixed;
+  inset: -40px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,0.80) 100%);
+  z-index: 65;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255,179,71,0.50), 0 0 80px rgba(209,166,104,0.30), 0 0 140px rgba(184,115,43,0.12);
+}
+
+/* Holographic glass panel */
+.hud-card {
+  position: relative;
+  border-radius: 4px;
+}
+
+/* HUD corner accent marks */
+.hud-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+.hud-corner::before,
+.hud-corner::after {
+  content: "";
+  position: absolute;
+  background: var(--gold);
+  opacity: 0.40;
+}
+.hud-corner-tl { top: 4px; left: 4px; }
+.hud-corner-tl::before { top: 0; left: 0; width: 14px; height: 1px; }
+.hud-corner-tl::after  { top: 0; left: 0; width: 1px; height: 14px; }
+
+.hud-corner-tr { top: 4px; right: 4px; }
+.hud-corner-tr::before { top: 0; right: 0; width: 14px; height: 1px; }
+.hud-corner-tr::after  { top: 0; right: 0; width: 1px; height: 14px; }
+
+.hud-corner-bl { bottom: 4px; left: 4px; }
+.hud-corner-bl::before { bottom: 0; left: 0; width: 14px; height: 1px; }
+.hud-corner-bl::after  { bottom: 0; left: 0; width: 1px; height: 14px; }
+
+.hud-corner-br { bottom: 4px; right: 4px; }
+.hud-corner-br::before { bottom: 0; right: 0; width: 14px; height: 1px; }
+.hud-corner-br::after  { bottom: 0; right: 0; width: 1px; height: 14px; }
